@@ -1,0 +1,33 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>    
+#include <BlynkSimpleEsp8266.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS D2
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+char auth[] ="abab24c5192144fda436a63b7d6aeb64";
+char ssid[] ="CORALIN";
+char pass[] ="4f855jm5";
+int sensor=0;
+void setup() 
+{
+Serial.begin(115200);
+Blynk.begin(auth, ssid, pass);
+sensors.begin();
+}
+void sendTemps()
+{
+sensor=analogRead(A0);
+sensors.requestTemperatures();
+float temp = sensors.getTempCByIndex(0); 
+Serial.println(temp);
+Serial.println(sensor);
+Blynk.virtualWrite(V1, temp);
+Blynk.virtualWrite(V2,sensor);
+delay(1000);
+}
+Void  loop() {
+Blynk.run();
+sendTemps();
+}
