@@ -27,7 +27,7 @@ Blynk.virtualWrite(V1, temp);
 Blynk.virtualWrite(V2,sensor);
 delay(1000);
 }
-Void  loop() {
+void loop() {
 Blynk.run();
 sendTemps();
 }
